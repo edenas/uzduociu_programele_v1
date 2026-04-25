@@ -22,11 +22,11 @@ class Task(models.Model):
         return self.deadline and timezone.now() > self.deadline
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.content}"
 
     class Meta:
         verbose_name = "Uždavinys"
-        verbose_name_plural = "Uždoutis"
+        verbose_name_plural = "Užduotis"
 
 
 class Answer(models.Model):

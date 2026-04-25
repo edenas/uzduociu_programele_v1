@@ -18,7 +18,7 @@
             <p><strong>Dėstytojas: </strong>{{ task.teacher.first_name }} {{ task.teacher.last_name }}</p>
         <hr>
         {% if user.is_authenticated %}
-            <a class="btn btn-primary" href="{% url 'answer_create' task.pk %}">Atsakyti į užduotį</a>
+            <a class="btn btn-primary py-2 px-5" href="{% url 'answer_create' task.pk %}">Atsakyti</a>
         {% endif %}
     </div>
 </div>

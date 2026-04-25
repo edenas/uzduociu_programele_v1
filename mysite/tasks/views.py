@@ -22,19 +22,23 @@ class StatsView(LoginRequiredMixin, View):
 
         correct_answers = 0
         incorrect_answers = 0
+        late_answers = 0
 
         for answer in answers:
-            if answer.is_correct():
+            if answer.task.is_overdue():
+                late_answers += 1
+            elif answer.is_correct():
                 correct_answers += 1
             else:
                 incorrect_answers += 1
 
         context = {
-            'num_task': Task.objects.count(),  # gali palikti arba vėliau irgi suasmeninti
+            'num_task': Task.objects.count(),
             'num_answers_done': answers.count(),
             'num_visits': num_visits,
             'correct_answers': correct_answers,
             'incorrect_answers': incorrect_answers,
+            'late_answers': late_answers,
         }
 
         return render(request, "stats.html", context=context)
