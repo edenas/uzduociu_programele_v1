@@ -18,12 +18,27 @@ def index(request):
 def stats(request):
     num_visits = request.session.get('num_visits', 1)
     request.session['num_visits'] = num_visits + 1
+
+    answers = Answer.objects.all()
+
+    teisingi = 0
+    neteisingi = 0
+
+    for answer in answers:
+        if answer.is_correct():
+            teisingi += 1
+        else:
+            neteisingi += 1
+
     context = {
         'num_task': Task.objects.count(),
-        'num_answers_done': Answer.objects.count(),
+        'num_answers_done': answers.count(),
         'num_visits': num_visits,
+        'teisingi': teisingi,
+        'neteisingi': neteisingi,
     }
-    return render(request, template_name="stats.html", context=context)
+
+    return render(request, "stats.html", context=context)
 
 
 def task(request, pk):
