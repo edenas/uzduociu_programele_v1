@@ -29,9 +29,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'index' %}">Užduotys</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'stats' %}">Statistika</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'stats' %}">Statistika</a>
+                    </li>
+                {% endif %}
 
                 {% if user.is_authenticated %}
 
