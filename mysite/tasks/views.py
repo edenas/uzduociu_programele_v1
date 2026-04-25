@@ -4,6 +4,8 @@ from django.shortcuts import render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from django.views import View
+
 from .models import Task, Answer
 from .forms import AnswerCreateForm, UserUpdateForm
 
@@ -15,30 +17,31 @@ def index(request):
     return render(request, template_name="index.html", context=context)
 
 
-def stats(request):
-    num_visits = request.session.get('num_visits', 1)
-    request.session['num_visits'] = num_visits + 1
+class StatsView(LoginRequiredMixin, View):
+    def get(self, request):
+        num_visits = request.session.get('num_visits', 1)
+        request.session['num_visits'] = num_visits + 1
 
-    answers = Answer.objects.all()
+        answers = Answer.objects.all()
 
-    teisingi = 0
-    neteisingi = 0
+        correct_answers = 0
+        incorrect_answers = 0
 
-    for answer in answers:
-        if answer.is_correct():
-            teisingi += 1
-        else:
-            neteisingi += 1
+        for answer in answers:
+            if answer.is_correct():
+                correct_answers += 1
+            else:
+                incorrect_answers += 1
 
-    context = {
-        'num_task': Task.objects.count(),
-        'num_answers_done': answers.count(),
-        'num_visits': num_visits,
-        'teisingi': teisingi,
-        'neteisingi': neteisingi,
-    }
+        context = {
+            'num_task': Task.objects.count(),
+            'num_answers_done': answers.count(),
+            'num_visits': num_visits,
+            'correct_answers': correct_answers,
+            'incorrect_answers': incorrect_answers,
+        }
 
-    return render(request, "stats.html", context=context)
+        return render(request, "stats.html", context=context)
 
 
 def task(request, pk):
