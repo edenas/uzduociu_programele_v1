@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Atsakymai{% endblock %}
+{% block content %}
+<h1>Atsakymai:</h1>
+
+{% for answer in answers %}
+<p><a href="{{ answer.pk }}">{{ answer }}</a></p>
+{% endfor %}
+
+{% endblock %}

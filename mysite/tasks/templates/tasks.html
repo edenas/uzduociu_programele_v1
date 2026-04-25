@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Užduotys{% endblock %}
+{% block content %}
+
+<div class="row">
+    {% for task in tasks %}
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card mb-4 shadow-sm w-100">
+                {% if task.photo %}
+                    <img src="{{ task.photo.url }}" class="card-img-top" alt="">
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 {% if task.is_overdue %}text-danger{% else %}text-muted{% endif %}">{{ task.name }}</h6>
+                    <p class="card-text">Dėstytojas: {{ task.teacher.first_name }} {{ task.teacher.last_name }}</p>
+                    <p class="card-text">
+                        <a href="{% url 'task' task.pk %}" class="btn btn-primary mt-2 w-100 py-2">Peržiūrėti užduotį</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

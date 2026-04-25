@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Atsakymas{% endblock %}
+{% block content %}
+
+<p>Užduotis: {{ answer.task }}</p>
+<p>Studentas: {{ answer.student }}</p>
+<p>Data: {{ answer.date }}</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Atsakymas</th>
+            <th>Ar gerai atsakė</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {% if answer.answer %}
+                    Taip
+                {% else %}
+                    Ne
+                {% endif %}
+            </td>
+            <td>
+                {% if answer.is_correct %}
+                    Taip
+                {% else %}
+                    Ne
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{% if user.is_staff %}
+<div class="mb-2">
+    <a class="btn btn-warning" href="{% url 'answer_update' answer.pk %}">Redaguoti</a>
+    <a class="btn btn-danger" href="{% url 'answer_delete' answer.pk %}">Ištrinti</a>
+</div>
+{% endif %}
+
+{% endblock %}

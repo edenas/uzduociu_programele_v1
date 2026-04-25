@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Mano atsakymai{% endblock %}
+{% block content %}
+<h1>Mano atsakymai:</h1>
+
+{% for answer in answers %}
+<p>
+    <a href="{% url 'answer' answer.pk %}" class="{% if answer.task.is_overdue %}text-danger{% endif %}">
+        {{ answer }}
+    </a>
+</p>
+{% endfor %}
+
+{% endblock %}

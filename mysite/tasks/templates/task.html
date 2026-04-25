@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Užduotis{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-4 col-md-5">
+        {% if task.photo %}
+            <img src="{{ task.photo.url }}" class="img-fluid rounded mb-3" alt="">
+        {% endif %}
+    </div>
+
+    <div class="col-lg-8 col-md-7">
+
+        <h4 class="{% if task.is_overdue %}text-danger{% endif %}">{{ task.name }}</h4>
+        <h1>{{ task.content }}</h1>
+        <hr>
+            <p><strong>Terminas: </strong>{{ task.deadline }}</p>
+            <p><strong>Dėstytojas: </strong>{{ task.teacher.first_name }} {{ task.teacher.last_name }}</p>
+        <hr>
+        {% if user.is_authenticated %}
+            <a class="btn btn-primary" href="{% url 'answer_create' task.pk %}">Atsakyti į užduotį</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
