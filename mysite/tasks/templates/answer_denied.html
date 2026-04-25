@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Užduotis jau atlikta{% endblock %}
+{% block content %}
+
+<h1>Užduotis jau atlikta</h1>
+<p class="text-danger">Atsiprašome, tačiau užduoties atlikti dar kartą negalite.</p>
+
+<a class="btn btn-primary" href="{% url 'index' %}">Grįžti į užduotis</a>
+
+{% endblock %}

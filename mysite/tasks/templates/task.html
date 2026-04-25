@@ -17,8 +17,13 @@
             <p><strong>Terminas: </strong>{{ task.deadline }}</p>
             <p><strong>Dėstytojas: </strong>{{ task.teacher.first_name }} {{ task.teacher.last_name }}</p>
         <hr>
+
         {% if user.is_authenticated %}
-            <a class="btn btn-primary py-2 px-5" href="{% url 'answer_create' task.pk %}">Atsakyti</a>
+            {% if answered %}
+                <p class="text-danger">Atsiprašome, tačiau užduoties atlikti dar kartą negalite.</p>
+            {% else %}
+                <a class="btn btn-primary py-2 px-5" href="{% url 'answer_create' task.pk %}">Atsakyti</a>
+            {% endif %}
         {% endif %}
     </div>
 </div>

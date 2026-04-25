@@ -44,8 +44,16 @@ class StatsView(LoginRequiredMixin, View):
         return render(request, "stats.html", context=context)
 
 def task(request, pk):
+    selected_task = Task.objects.get(pk=pk)
+    answered = False
+
+    if request.user.is_authenticated:
+        if Answer.objects.filter(task=selected_task, student=request.user).count() > 0:
+            answered = True
+
     context = {
-        'task': Task.objects.get(pk=pk),
+        'task': selected_task,
+        'answered': answered,
     }
     return render(request, template_name="task.html", context=context)
 
@@ -79,8 +87,22 @@ class AnswerCreateView(LoginRequiredMixin, CreateView):
     def get_initial(self):
         return {'task': Task.objects.get(pk=self.kwargs['pk'])}
 
+    def get(self, request, *args, **kwargs):
+        selected_task = Task.objects.get(pk=self.kwargs['pk'])
+
+        if Answer.objects.filter(task=selected_task, student=self.request.user).count() > 0:
+            return render(request, "answer_denied.html")
+
+        return super().get(request, *args, **kwargs)
+
     def form_valid(self, form):
+        selected_task = Task.objects.get(pk=self.kwargs['pk'])
+
+        if Answer.objects.filter(task=selected_task, student=self.request.user).count() > 0:
+            return render(self.request, "answer_denied.html")
+
         form.instance.student = self.request.user
+        form.instance.task = selected_task
         return super().form_valid(form)
 
 class AnswerUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
