@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'tasks',
+    'tasks.apps.TasksConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'django.contrib.admin',
