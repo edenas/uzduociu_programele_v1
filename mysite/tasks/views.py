@@ -9,6 +9,13 @@ from .forms import AnswerCreateForm, UserUpdateForm
 
 
 def index(request):
+    context = {
+        'tasks': Task.objects.all(),
+    }
+    return render(request, template_name="index.html", context=context)
+
+
+def stats(request):
     num_visits = request.session.get('num_visits', 1)
     request.session['num_visits'] = num_visits + 1
     context = {
@@ -16,14 +23,7 @@ def index(request):
         'num_answers_done': Answer.objects.count(),
         'num_visits': num_visits,
     }
-    return render(request, template_name="index.html", context=context)
-
-
-def tasks(request):
-    context = {
-        'tasks': Task.objects.all(),
-    }
-    return render(request, template_name="tasks.html", context=context)
+    return render(request, template_name="stats.html", context=context)
 
 
 def task(request, pk):
