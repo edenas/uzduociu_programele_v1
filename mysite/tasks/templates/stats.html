@@ -2,14 +2,42 @@
 {% block title %}Statistika{% endblock %}
 {% block content %}
 
-<h1 class="mb-4">Užduočių programėlės statistika:</h1>
-<p>Užduočių: {{ num_task }}</p>
-<p>Atliktų užduočių skaičius: {{ num_answers_done }}</p>
-<hr>
-<p class="text-success">Teisingų atsakymų: {{ correct_answers }}</p>
-<p class="text-danger">Neteisingų atsakymų: {{ incorrect_answers }}</p>
-<p class="text-warning">Pavėlavę: {{ late_answers }}</p>
-<hr>
-<p>Apsilankimų skaičius: {{ num_visits }}</p>
+<h1 class="mb-5">Jūsų statistika:</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Pavadinimas</th>
+            <th>Bendras skaičius</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Užduočių</td>
+            <td>{{ num_task }}</td>
+        </tr>
+        <tr>
+            <td>Atliktų užduočių</td>
+            <td>{{ num_answers_done }}</td>
+        </tr>
+
+        <tr>
+            <td class="text-success">Teisingų atsakymų</td>
+            <td class="text-success">{{ correct_answers }}</td>
+        </tr>
+        <tr>
+            <td class="text-danger">Neteisingų atsakymų</td>
+            <td class="text-danger">{{ incorrect_answers }}</td>
+        </tr>
+        <tr>
+            <td class="text-warning">Pavėlavę</td>
+            <td class="text-warning">{{ late_answers }}</td>
+        </tr>
+        <tr>
+            <td>Apsilankymų skaičius</td>
+            <td>{{ num_visits }}</td>
+        </tr>
+    </tbody>
+</table>
 
 {% endblock %}

@@ -23,7 +23,6 @@
 
 {% if user.is_staff %}
 <div class="mb-2">
-    <a class="btn btn-warning" href="{% url 'answer_update' answer.pk %}">Redaguoti</a>
     <a class="btn btn-danger" href="{% url 'answer_delete' answer.pk %}">Ištrinti</a>
 </div>
 {% endif %}

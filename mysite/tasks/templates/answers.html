@@ -1,10 +1,36 @@
 {% extends 'base.html' %}
 {% block title %}Atsakymai{% endblock %}
 {% block content %}
+
 <h1 class="mb-4">Atsakymai:</h1>
 
-{% for answer in answers %}
-<p><a href="{{ answer.pk }}">{{ answer }}</a></p>
-{% endfor %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Užduotis</th>
+            <th>Studentas</th>
+            <th>Ar teisingas</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for answer in answers %}
+        <tr>
+            <td>
+                <a href="{% url 'answer' answer.pk %}">{{ answer.task }}</a>
+            </td>
+            <td>{{ answer.student }}</td>
+            <td>
+                {% if answer.task.is_overdue %}
+                    <span class="text-warning">Pavėlavo</span>
+                {% elif answer.is_correct %}
+                    <span class="text-success">Taip</span>
+                {% else %}
+                    <span class="text-danger">Ne</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

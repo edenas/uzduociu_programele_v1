@@ -105,17 +105,6 @@ class AnswerCreateView(LoginRequiredMixin, CreateView):
         form.instance.task = selected_task
         return super().form_valid(form)
 
-class AnswerUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Answer
-    template_name = "answer_form.html"
-    form_class = AnswerCreateForm
-
-    def get_success_url(self):
-        return reverse("answer", kwargs={"pk": self.object.pk})
-
-    def test_func(self):
-        return self.request.user.is_staff
-
 class AnswerDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Answer
     template_name = "answer_delete.html"
