@@ -2,9 +2,9 @@
 {% block title %}Atsakymas{% endblock %}
 {% block content %}
 
-<p>Užduotis: {{ answer.task }}</p>
-<p>Studentas: {{ answer.student }}</p>
-<p>Data: {{ answer.date }}</p>
+<p><strong>Užduotis: </strong>{{ answer.task }}</p>
+<p><strong>Studentas: </strong>{{ answer.student }}</p>
+<p><strong>Data: </strong>{{ answer.date }}</p>
 
 <table class="table table-bordered">
     <thead>
@@ -15,20 +15,8 @@
     </thead>
     <tbody>
         <tr>
-            <td>
-                {% if answer.answer %}
-                    Taip
-                {% else %}
-                    Ne
-                {% endif %}
-            </td>
-            <td>
-                {% if answer.is_correct %}
-                    Taip
-                {% else %}
-                    Ne
-                {% endif %}
-            </td>
+            <td>{{ answer.answer_display }}</td>
+            <td>{{ answer.correct_display }}</td>
         </tr>
     </tbody>
 </table>

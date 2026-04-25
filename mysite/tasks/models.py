@@ -26,7 +26,7 @@ class Task(models.Model):
 
     class Meta:
         verbose_name = "Uždavinys"
-        verbose_name_plural = "Užduotis"
+        verbose_name_plural = "Uždaviniai"
 
 
 class Answer(models.Model):
@@ -50,3 +50,9 @@ class Answer(models.Model):
     class Meta:
         verbose_name = "Atsakymas"
         verbose_name_plural = "Atsakymai"
+
+    def answer_display(self):
+        return "Taip" if self.answer else "Ne"
+
+    def correct_display(self):
+        return "Taip" if self.is_correct() else "Ne"

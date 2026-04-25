@@ -22,7 +22,7 @@
             {% if answered %}
                 <p class="text-danger">Atsiprašome, tačiau užduoties atlikti dar kartą negalite.</p>
             {% else %}
-                <a class="btn btn-primary py-2 px-5" href="{% url 'answer_create' task.pk %}">Atsakyti</a>
+                <a class="btn btn-primary py-2 px-5" href="{% url 'answer_create' task.pk %}">Pateikti atsakymą</a>
             {% endif %}
         {% endif %}
     </div>
