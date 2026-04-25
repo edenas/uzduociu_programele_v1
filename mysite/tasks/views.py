@@ -3,12 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
 from django.views import View
-
 from .models import Task, Answer
 from .forms import AnswerCreateForm, UserUpdateForm
-
 
 def index(request):
     context = {
@@ -16,13 +13,12 @@ def index(request):
     }
     return render(request, template_name="index.html", context=context)
 
-
 class StatsView(LoginRequiredMixin, View):
     def get(self, request):
         num_visits = request.session.get('num_visits', 1)
         request.session['num_visits'] = num_visits + 1
 
-        answers = Answer.objects.all()
+        answers = Answer.objects.filter(student=request.user)
 
         correct_answers = 0
         incorrect_answers = 0
@@ -34,7 +30,7 @@ class StatsView(LoginRequiredMixin, View):
                 incorrect_answers += 1
 
         context = {
-            'num_task': Task.objects.count(),
+            'num_task': Task.objects.count(),  # gali palikti arba vėliau irgi suasmeninti
             'num_answers_done': answers.count(),
             'num_visits': num_visits,
             'correct_answers': correct_answers,
@@ -43,13 +39,11 @@ class StatsView(LoginRequiredMixin, View):
 
         return render(request, "stats.html", context=context)
 
-
 def task(request, pk):
     context = {
         'task': Task.objects.get(pk=pk),
     }
     return render(request, template_name="task.html", context=context)
-
 
 class AnswerListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Answer
@@ -59,12 +53,10 @@ class AnswerListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def test_func(self):
         return self.request.user.is_staff
 
-
 class AnswerDetailView(LoginRequiredMixin, DetailView):
     model = Answer
     template_name = "answer.html"
     context_object_name = "answer"
-
 
 class UserAnswerListView(LoginRequiredMixin, ListView):
     model = Answer
@@ -73,7 +65,6 @@ class UserAnswerListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Answer.objects.filter(student=self.request.user)
-
 
 class AnswerCreateView(LoginRequiredMixin, CreateView):
     model = Answer
@@ -88,7 +79,6 @@ class AnswerCreateView(LoginRequiredMixin, CreateView):
         form.instance.student = self.request.user
         return super().form_valid(form)
 
-
 class AnswerUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Answer
     template_name = "answer_form.html"
@@ -100,7 +90,6 @@ class AnswerUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.request.user.is_staff
 
-
 class AnswerDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Answer
     template_name = "answer_delete.html"
@@ -110,12 +99,10 @@ class AnswerDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.is_staff
 
-
 class SignUpView(CreateView):
     form_class = UserCreationForm
     template_name = "signup.html"
     success_url = reverse_lazy("login")
-
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     form_class = UserUpdateForm
