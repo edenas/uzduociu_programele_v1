@@ -1,0 +1,11 @@
+.hero {
+    height: 200px;
+    background: url("/static/images/header.jpg") center / cover no-repeat;
+}
+
+.logo {
+    display: block;
+    width: 120px;
+    height: 40px;
+    background: url("/static/images/logo.png") center / contain no-repeat;
+}
