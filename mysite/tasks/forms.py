@@ -6,7 +6,7 @@ from .models import Answer
 class AnswerCreateForm(forms.ModelForm):
     class Meta:
         model = Answer
-        fields = ['task', 'answer']
+        fields = ['answer']
 
 
 class UserUpdateForm(forms.ModelForm):

@@ -7,11 +7,13 @@ from django.views import View
 from .models import Task, Answer
 from .forms import AnswerCreateForm, UserUpdateForm
 
+
 def index(request):
     context = {
         'tasks': Task.objects.all(),
     }
     return render(request, template_name="index.html", context=context)
+
 
 class StatsView(LoginRequiredMixin, View):
     def get(self, request):
@@ -43,6 +45,7 @@ class StatsView(LoginRequiredMixin, View):
 
         return render(request, "stats.html", context=context)
 
+
 def task(request, pk):
     selected_task = Task.objects.get(pk=pk)
     answered = False
@@ -57,6 +60,7 @@ def task(request, pk):
     }
     return render(request, template_name="task.html", context=context)
 
+
 class AnswerListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Answer
     template_name = "answers.html"
@@ -65,10 +69,12 @@ class AnswerListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def test_func(self):
         return self.request.user.is_staff
 
+
 class AnswerDetailView(LoginRequiredMixin, DetailView):
     model = Answer
     template_name = "answer.html"
     context_object_name = "answer"
+
 
 class UserAnswerListView(LoginRequiredMixin, ListView):
     model = Answer
@@ -78,14 +84,17 @@ class UserAnswerListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Answer.objects.filter(student=self.request.user)
 
+
 class AnswerCreateView(LoginRequiredMixin, CreateView):
     model = Answer
     form_class = AnswerCreateForm
     template_name = "answer_form.html"
     success_url = reverse_lazy("useranswers")
 
-    def get_initial(self):
-        return {'task': Task.objects.get(pk=self.kwargs['pk'])}
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['task'] = Task.objects.get(pk=self.kwargs['pk'])
+        return context
 
     def get(self, request, *args, **kwargs):
         selected_task = Task.objects.get(pk=self.kwargs['pk'])
@@ -105,6 +114,7 @@ class AnswerCreateView(LoginRequiredMixin, CreateView):
         form.instance.task = selected_task
         return super().form_valid(form)
 
+
 class AnswerDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Answer
     template_name = "answer_delete.html"
@@ -114,10 +124,12 @@ class AnswerDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.is_staff
 
+
 class SignUpView(CreateView):
     form_class = UserCreationForm
     template_name = "signup.html"
     success_url = reverse_lazy("login")
+
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     form_class = UserUpdateForm
