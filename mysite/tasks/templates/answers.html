@@ -9,7 +9,8 @@
         <tr>
             <th>Užduotis</th>
             <th>Studentas</th>
-            <th>Ar teisingas</th>
+            <th>Data</th>
+            <th>Atsakymas</th>
         </tr>
     </thead>
     <tbody>
@@ -19,9 +20,10 @@
                 <a href="{% url 'answer' answer.pk %}">{{ answer.task }}</a>
             </td>
             <td>{{ answer.student }}</td>
+            <td>{{ answer.date|date:"Y-m-d H:i" }}</td>
             <td>
                 {% if answer.task.is_overdue %}
-                    <span class="text-warning">Pavėlavo</span>
+                    <span class="text-warning">Neužskaityta</span>
                 {% elif answer.is_correct %}
                     <span class="text-success">Taip</span>
                 {% else %}
