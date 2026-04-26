@@ -22,8 +22,14 @@
 </table>
 
 {% if user.is_staff %}
-<div class="mb-2">
-    <a class="btn btn-danger" href="{% url 'answer_delete' answer.pk %}">Ištrinti</a>
+<div class="d-flex align-items-center gap-4 mt-3">
+    <a class="btn btn-danger" href="{% url 'answer_delete' answer.pk %}">
+        Ištrinti
+    </a>
+
+    <p class="text-danger mb-0">
+        Dėmesio: ištrynus atsakymą, jo atkurti nebebus galima.
+    </p>
 </div>
 {% endif %}
 
