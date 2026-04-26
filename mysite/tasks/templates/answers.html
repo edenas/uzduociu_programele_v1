@@ -27,9 +27,9 @@ bei ar atsakymas buvo teisingas, neteisingas ar neužskaitytas.
                 <a href="{% url 'answer' answer.pk %}">{{ answer.task }}</a>
             </td>
             <td>{{ answer.student }}</td>
-            <td>{{ answer.date|date:"Y-m-d H:i" }}</td>
+            <td>{{ answer.date | date:"Y-m-d H:i" }}</td>
             <td>
-                {% if answer.task.is_overdue %}
+                {% if answer.task.deadline and answer.date > answer.task.deadline %}
                     <span class="text-warning">Neužskaityta</span>
                 {% elif answer.is_correct %}
                     <span class="text-success">Taip</span>

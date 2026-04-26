@@ -27,7 +27,7 @@ class StatsView(LoginRequiredMixin, View):
         late_answers = 0
 
         for answer in answers:
-            if answer.task.is_overdue():
+            if answer.task.deadline and answer.date > answer.task.deadline:
                 late_answers += 1
             elif answer.is_correct():
                 correct_answers += 1

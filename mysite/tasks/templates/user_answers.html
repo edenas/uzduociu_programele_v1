@@ -28,7 +28,7 @@ Tai leidžia jums įsivertinti savo žinias ir pažangą.
             </td>
             <td>{{ answer.date }}</td>
             <td>
-                {% if answer.task.is_overdue %}
+                {% if answer.task.deadline and answer.date > answer.task.deadline %}
                     <span class="text-warning">Neužskaityta</span>
                 {% elif answer.is_correct %}
                     <span class="text-success">Taip</span>
