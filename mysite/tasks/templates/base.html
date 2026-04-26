@@ -27,26 +27,26 @@
             <ul class="navbar-nav mx-auto gap-3 align-items-center">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Užduotys</a>
+                    <a class="nav-link text-white fs-6" href="{% url 'index' %}">Užduotys</a>
                 </li>
 
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'stats' %}">Mano pažanga</a>
+                        <a class="nav-link text-white fs-6" href="{% url 'stats' %}">Mano pažanga</a>
                     </li>
 
                     {% if user.is_staff %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'answers' %}">Studentų atsakymai</a>
+                            <a class="nav-link text-white fs-6" href="{% url 'answers' %}">Studentų atsakymai</a>
                         </li>
                     {% endif %}
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'useranswers' %}">Mano atsakymai</a>
+                        <a class="nav-link text-white fs-6" href="{% url 'useranswers' %}">Mano atsakymai</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'profile' %}">
+                        <a class="nav-link text-white fs-6" href="{% url 'profile' %}">
                             <i class="bi bi-person-circle me-1"></i>{{ user.get_username }}
                         </a>
                     </li>
@@ -54,16 +54,16 @@
                     <li class="nav-item">
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
-                            <button class="btn btn-danger btn-sm" type="submit">Atsijungti</button>
+                            <button class="btn btn-danger fs-6 px-3 py-1" type="submit">Atsijungti</button>
                         </form>
                     </li>
 
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Prisijungti</a>
+                        <a class="nav-link text-white fs-6" href="{% url 'login' %}">Prisijungti</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signup' %}">Registracija</a>
+                        <a class="nav-link text-white fs-6" href="{% url 'signup' %}">Registracija</a>
                     </li>
                 {% endif %}
 
