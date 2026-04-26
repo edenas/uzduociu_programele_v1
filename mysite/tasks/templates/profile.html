@@ -3,21 +3,51 @@
 {% block title %}Profilis{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md">
-            <p><strong>Username: </strong>{{ user.username }}</p>
-            <p><strong>First Name: </strong>{{ user.first_name }}</p>
-            <p><strong>Last Name: </strong>{{ user.last_name }}</p>
-            <p><strong>Email: </strong>{{ user.email }}</p>
-            <h2 class="mb-4 text-center">Profilis</h2>
-            <form method="post">
-                {% csrf_token %}
-                {% load crispy_forms_tags %}
-                {{ form | crispy }}
-                <button type="submit" class="btn btn-primary w-100">Atnaujinti</button>
-            </form>
-        </div>
-    </div>
-</div>
+
+<h1 class="mb-4">Profilis</h1>
+
+<p class="text-muted mb-4">
+Šiame puslapyje pateikiama jūsų paskyros informacija. Čia galite matyti savo vartotojo vardą, vardą, pavardę ir el. pašto adresą.
+Peržiūrėkite šiuos duomenis ir įsitikinkite, kad jie yra teisingi bei atnaujinti.
+Jeigu reikia, galite juos pakeisti arba papildyti, kad jūsų paskyros informacija visuomet būtų tiksli ir aktuali.
+</p>
+
+<table class="table table-striped mb-5">
+    <thead>
+        <tr>
+            <th>Informacija</th>
+            <th>Duomenys</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Vartotojo vardas</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>Vardas</td>
+            <td>{{ user.first_name }}</td>
+        </tr>
+        <tr>
+            <td>Pavardė</td>
+            <td>{{ user.last_name }}</td>
+        </tr>
+        <tr>
+            <td>El. pašto adresas</td>
+            <td>{{ user.email }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="mb-4">Profilio redagavimas</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {% load crispy_forms_tags %}
+    {{ form | crispy }}
+    <button type="submit" class="btn btn-primary w-100 mt-4">
+    Išsaugoti
+</button>
+</form>
+
 {% endblock %}
