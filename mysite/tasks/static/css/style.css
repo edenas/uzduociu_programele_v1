@@ -5,7 +5,7 @@
 
 .logo {
     display: block;
-    width: 120px;
-    height: 40px;
+    width: 135px;
+    height: 47px;
     background: url("/static/images/logo.png") center / contain no-repeat;
 }

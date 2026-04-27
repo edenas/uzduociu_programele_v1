@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views import View
@@ -47,12 +47,14 @@ class StatsView(LoginRequiredMixin, View):
 
 
 def task(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
     selected_task = Task.objects.get(pk=pk)
     answered = False
 
-    if request.user.is_authenticated:
-        if Answer.objects.filter(task=selected_task, student=request.user).count() > 0:
-            answered = True
+    if Answer.objects.filter(task=selected_task, student=request.user).count() > 0:
+        answered = True
 
     context = {
         'task': selected_task,
