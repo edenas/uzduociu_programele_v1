@@ -14,4 +14,8 @@ urlpatterns = [
 
     path('signup/', views.SignUpView.as_view(), name='signup'),
     path('profile/', views.ProfileUpdateView.as_view(), name='profile'),
+    path('tasks/manage/', views.TaskManageListView.as_view(), name='tasks_manage'),
+    path('tasks/create/', views.TaskCreateView.as_view(), name='task_create'),
+    path('tasks/<int:pk>/update/', views.TaskUpdateView.as_view(), name='task_update'),
+    path('tasks/<int:pk>/delete/', views.TaskDeleteView.as_view(), name='task_delete'),
 ]

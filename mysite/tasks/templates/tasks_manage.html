@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Uždaviniai{% endblock %}
+{% block content %}
+
+<h1 class="mb-4">Uždaviniai</h1>
+
+<p class="text-muted mb-4">
+Šiame puslapyje dėstytojas gali valdyti užduotis: sukurti naują užduotį, redaguoti jau sukurtą arba ištrinti nebereikalingą.
+</p>
+
+<a class="btn btn-primary mb-4" href="{% url 'task_create' %}">Sukurti naują užduotį</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Užduotis</th>
+            <th>Terminas</th>
+            <th>Veiksmai</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.name }}</td>
+            <td>{{ task.deadline }}</td>
+            <td>
+                <a class="btn btn-primary btn-sm" href="{% url 'task_update' task.pk %}">Redaguoti</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'task_delete' task.pk %}">Ištrinti</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

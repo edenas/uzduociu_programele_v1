@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views import View
 from .models import Task, Answer
-from .forms import AnswerCreateForm, UserUpdateForm
+from .forms import AnswerCreateForm, UserUpdateForm, TaskCreateForm
 
 
 def index(request):
@@ -140,3 +140,45 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+class TaskManageListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = Task
+    template_name = "tasks_manage.html"
+    context_object_name = "tasks"
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+class TaskCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Task
+    form_class = TaskCreateForm
+    template_name = "task_form.html"
+    success_url = reverse_lazy('tasks_manage')
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def form_valid(self, form):
+        form.instance.teacher = self.request.user
+        return super().form_valid(form)
+
+
+class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Task
+    form_class = TaskCreateForm
+    template_name = "task_form.html"
+    success_url = reverse_lazy('tasks_manage')
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Task
+    template_name = "task_delete.html"
+    context_object_name = "task"
+    success_url = reverse_lazy('tasks_manage')
+
+    def test_func(self):
+        return self.request.user.is_staff

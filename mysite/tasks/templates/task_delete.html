@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Užduoties trynimas{% endblock %}
+{% block content %}
+
+<h1 class="mb-4">Užduoties trynimas</h1>
+
+<p>Ar tikrai norite ištrinti užduotį "{{ task }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Taip, ištrinti</button>
+    <a class="btn btn-secondary" href="{% url 'tasks_manage' %}">Ne</a>
+</form>
+
+{% endblock %}
